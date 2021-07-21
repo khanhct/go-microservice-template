@@ -1,0 +1,24 @@
+[mariadb]
+address  = "192.168.1.6"
+username = "admin"
+password = "Cas@2020"
+port     = 3306
+database = "casorder"
+[server]
+ip = "127.0.0.1"
+port = 8090
+[redis]
+address = "127.0.0.1"
+port = 6379
+[environment]
+mode = "dev"
+[logging]
+mode = "debug"
+logFolder = "logs\\"
+logFile = "casorder.log"
+[token]
+key="secret"
+expire = 2
+[grpc]
+host = "127.0.0.1"
+port = "55051"
