@@ -50,12 +50,11 @@ func Initialize() {
 	}
 
 	logPath := fmt.Sprintf("%v%v", viper.GetString("logging.logFolder"), viper.GetString("logging.logFile"))
-	fmt.Println(logPath)
 	file, err := os.OpenFile(logPath, os.O_CREATE|os.O_WRONLY, 0666)
 	if err == nil {
 		_logger.Out = file
 	} else {
-		_logger.Error(err.Error())
+		_logger.Warn(err.Error())
 	}
 }
 
@@ -63,6 +62,5 @@ func GetLogger() *logrus.Logger {
 	if _logger == nil {
 		Initialize()
 	}
-
 	return _logger
 }

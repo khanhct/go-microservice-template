@@ -1,6 +1,6 @@
 module casorder
 
-go 1.16
+go 1.15
 
 require (
 	github.com/alecthomas/units v0.0.0-20210208195552-ff826a37aa15 // indirect
@@ -11,12 +11,14 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang-migrate/migrate v3.5.4+incompatible
 	github.com/kr/text v0.2.0 // indirect
+	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/sirupsen/logrus v1.7.0
 	github.com/spf13/viper v1.8.1
 	google.golang.org/grpc v1.39.0
-	google.golang.org/grpc/examples v0.0.0-20210720175814-65cabd74d8e1
+	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.1.0 // indirect
+	google.golang.org/grpc/examples v0.0.0-20210720175814-65cabd74d8e1 // indirect
+	google.golang.org/protobuf v1.27.1
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
-
 )

@@ -9,9 +9,11 @@ import (
 	"github.com/golang-migrate/migrate/database/mysql"
 	_ "github.com/golang-migrate/migrate/source/file"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
+	"github.com/spf13/viper"
 
 	"casorder/cmd"
 	"casorder/db"
+	"casorder/utils/mgrpc"
 )
 
 type Command struct {
@@ -43,6 +45,12 @@ func (c *Command) DowngrateDB() {
 	m.Steps(-2)
 }
 
+func (c *Command) TestGrpc() {
+	fmt.Println("Test Grpc Server")
+	grpcAddr := fmt.Sprintf("%v:%v", viper.GetString("grpc.host"), viper.GetString("grpc.port"))
+	mgrpc.TestClient(grpcAddr)
+}
+
 func main() {
 	cmd.Initialize()
 
@@ -51,6 +59,7 @@ func main() {
 
 	dbMigrate := app.Command("db-migrate", "Migrate database")
 	dbDowngrate := app.Command("db-downgrate", "Downgrate database")
+	testGrpc := app.Command("test-grpc", "Test grpc server")
 
 	checkConfigCmd := app.Command("config", "Check if the config files are valid or not.")
 	configFiles := checkConfigCmd.Arg(
@@ -68,7 +77,10 @@ func main() {
 		}
 	case dbMigrate.FullCommand():
 		command.MigrateDB()
+
 	case dbDowngrate.FullCommand():
 		command.DowngrateDB()
+	case testGrpc.FullCommand():
+		command.TestGrpc()
 	}
 }

@@ -10,7 +10,7 @@ import (
 func Initialize() {
 
 	// Initialize configuration
-	cfg.Initialize("order_config")
+	cfg.Initialize("config")
 
 	// Initialize log
 	logging.Initialize()

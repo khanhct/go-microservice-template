@@ -14,7 +14,7 @@ port = 6379
 mode = "dev"
 [logging]
 mode = "debug"
-logFolder = "logs\\"
+logFolder = "logs/"
 logFile = "casorder.log"
 [token]
 key="secret"

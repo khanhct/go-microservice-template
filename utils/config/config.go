@@ -7,7 +7,7 @@ import (
 func Initialize(configFile string) error {
 	// Only log the warning severity or above.
 	viper.SetConfigName(configFile) // no need to include file extension
-	viper.AddConfigPath(".\\etc")   // set the path of your config file
+	viper.AddConfigPath("./etc")   // set the path of your config file
 	err := viper.ReadInConfig()
 	return err
 }

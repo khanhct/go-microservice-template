@@ -3,11 +3,12 @@ package mgrpc
 import (
 	"context"
 	"net"
+	"time"
 
 	"casorder/utils/logging"
 
 	grpc "google.golang.org/grpc"
-	pb "google.golang.org/grpc/examples/helloworld/helloworld"
+	pb "casorder/taskmanager/grpc/build/helloworld"
 )
 
 var LOG = logging.GetLogger()
@@ -54,4 +55,23 @@ func (gs *GrpcServer) Start() error {
 		return err
 	}
 	return nil
+}
+
+
+func TestClient(address string) {
+	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
+	if err != nil {
+		LOG.Error("did not connect: ", err)
+	}
+	defer conn.Close()
+	c := pb.NewGreeterClient(conn)
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: "hello KhanhCT"})
+	if err != nil {
+		LOG.Error("could not greet: ", err)
+	}
+	LOG.Info("Greeting: ", r.GetMessage())
+
 }
