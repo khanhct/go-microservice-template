@@ -1,7 +1,7 @@
 [mariadb]
-address  = "192.168.1.6"
+address  = "127.0.0.1"
 username = "admin"
-password = "Cas@2020"
+password = "Cas2020"
 port     = 3306
 database = "casorder"
 [server]

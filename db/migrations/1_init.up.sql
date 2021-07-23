@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS product (
+  id CHAR(16)
+);

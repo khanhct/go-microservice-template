@@ -18,10 +18,8 @@ func Initialize() {
 	database := viper.GetString("mariadb.database")
 
 	// user:password@tcp(localhost:5555)/dbname?tls=skip-verify&autocommit=true
-	var connectionStr = fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?tls=skip-verify&autocommit=true", user, pass, hostname, port, database)
-
-	_db, _ := sql.Open("mysql", connectionStr)
-	defer _db.Close()
+	var connectionStr = fmt.Sprintf("%v:%v@tcp(%v:%v)/%v", user, pass, hostname, port, database)
+	_db, _ = sql.Open("mysql", connectionStr)
 }
 
 func GetDB() *sql.DB {
@@ -30,4 +28,8 @@ func GetDB() *sql.DB {
 	}
 
 	return _db
+}
+
+func Ping() error {
+	return _db.Ping()
 }

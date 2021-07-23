@@ -23,6 +23,8 @@ cd taskmanager/grpc
 
 ## How to run
 ```sh
+docker-compose up 
+
 go get -u google.golang.org/protobuf/cmd/protoc-gen-go
 go install google.golang.org/protobuf/cmd/protoc-gen-go
 go get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc
@@ -48,6 +50,7 @@ curl -X GET http://127.0.0.1:8090/casorder/api/v1/health/check
 ```sh
 ./bin/manage test-grpc
 ```
+
 
 # Buy Me A Coffee
 ## BTC

@@ -8,8 +8,8 @@ import (
 	"github.com/golang-migrate/migrate"
 	"github.com/golang-migrate/migrate/database/mysql"
 	_ "github.com/golang-migrate/migrate/source/file"
-	kingpin "gopkg.in/alecthomas/kingpin.v2"
 	"github.com/spf13/viper"
+	kingpin "gopkg.in/alecthomas/kingpin.v2"
 
 	"casorder/cmd"
 	"casorder/db"
@@ -20,13 +20,17 @@ type Command struct {
 }
 
 func (c *Command) MigrateDB() {
-	fmt.Println("Migrating database")
-
 	_db := db.GetDB()
+
+	fmt.Println("Migrating database")
 	driver, _ := mysql.WithInstance(_db, &mysql.Config{})
+
+	if driver == nil {
+		os.Exit(0)
+	}
 	m, _ := migrate.NewWithDatabaseInstance(
-		"file:///migrations",
-		"mysql",
+		"file://../db/migrations",
+		"casorder",
 		driver,
 	)
 	m.Steps(2)
@@ -38,8 +42,8 @@ func (c *Command) DowngrateDB() {
 	_db := db.GetDB()
 	driver, _ := mysql.WithInstance(_db, &mysql.Config{})
 	m, _ := migrate.NewWithDatabaseInstance(
-		"file:///migrations",
-		"mysql",
+		"file://../db/migrations",
+		"casorder",
 		driver,
 	)
 	m.Steps(-2)
@@ -54,7 +58,7 @@ func (c *Command) TestGrpc() {
 func main() {
 	cmd.Initialize()
 
-	app := kingpin.New("modular", "My modular application.")
+	app := kingpin.New("CasOrder", "My Order application.")
 	app.Version("1.0.0")
 
 	dbMigrate := app.Command("db-migrate", "Migrate database")

@@ -27,30 +27,32 @@ func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 type GrpcServer struct {
 	host string
 	port string
+	grpcServer *grpc.Server
 }
 
-func New(host string, port string) *GrpcServer {
+func New(host string, port string) GrpcServer {
 	gs := GrpcServer{
 		host: host,
 		port: port,
 	}
+	gs.grpcServer = grpc.NewServer()
 
-	return &gs
+	return gs
 }
 
 func (gs *GrpcServer) Start() error {
 	grpcAddr := net.JoinHostPort(gs.host, gs.port)
 	LOG.Info("Starting Grpc server: ", grpcAddr)
-
 	listener, err := net.Listen("tcp", grpcAddr)
 	if err != nil {
 		return err
 	}
 
-	grpcServer := grpc.NewServer()
-	pb.RegisterGreeterServer(grpcServer, &server{})
-	grpcServer.Serve(listener)
-	if err := grpcServer.Serve(listener); err != nil {
+	// Register servicers
+	pb.RegisterGreeterServer(gs.grpcServer, &server{})
+
+	gs.grpcServer.Serve(listener)
+	if err := gs.grpcServer.Serve(listener); err != nil {
 		LOG.Error("failed to serve: ", err)
 		return err
 	}
@@ -73,5 +75,4 @@ func TestClient(address string) {
 		LOG.Error("could not greet: ", err)
 	}
 	LOG.Info("Greeting: ", r.GetMessage())
-
 }
